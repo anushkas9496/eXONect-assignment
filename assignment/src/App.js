@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CountryList from "./CountryList";
+import "./styles.css"; // Import CSS file
 
-function App() {
+const App = () => {
+  const [countries, setCountries] = useState([]);
+
+  // Add a new country
+  const addCountry = () => {
+    const name = window.prompt("Enter country name:");
+    if (name && !countries.some((country) => country.name === name)) {
+      setCountries([...countries, { id: Date.now(), name, states: [] }]);
+    } else {
+      alert("Country name cannot be empty or duplicate.");
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1> Country, State, and City Management System</h1>
+      <button className="add-button" onClick={addCountry}>
+        Add Country
+      </button>
+      <CountryList countries={countries} setCountries={setCountries} />
     </div>
   );
-}
+};
 
 export default App;
